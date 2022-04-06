@@ -5,16 +5,22 @@ mkdir -p ~/sp_scenario_2_ws/src
 cd ~/sp_scenario_2_ws
 wget https://raw.githubusercontent.com/sequenceplanner/sp_scenario_2/master/ros2.repos
 vcs import src < ros2.repos
+. /opt/ros/galactic/setup.bash 
+colcon build --cmake-args -DCARGO_CLEAN=ON
 ```
 
 ## quickstart
 with the real robot or actual ursim:
 ```
+. /opt/ros/galactic/setup.bash
+. ~/sp_scenario_2_ws/install/setup.bash
 ros2 launch sp_scenario_2 bringup.launch.py
 ```
 
 with the simple robot simulator:
 ```
+. /opt/ros/galactic/setup.bash
+. ~/sp_scenario_2_ws/install/setup.bash
 ros2 launch sp_scenario_2 bringup_simple.launch.py
 ```
 
