@@ -43,7 +43,11 @@ repositories:
     type: git
     url: https://github.com/sequenceplanner/simple_robot_simulator.git
     version: v.0.0.2
+  realsense_aruco:
+    type: git
+    url: https://github.com/sequenceplanner/realsense_aruco.git
+    version: v.0.0.1
   sp_scenario_2:
     type: git
     url: https://github.com/sequenceplanner/sp_scenario_2.git
-    version: v.0.0.2
+    version: v.0.0.3
