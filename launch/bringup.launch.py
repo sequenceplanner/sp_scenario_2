@@ -493,7 +493,17 @@ def generate_launch_description():
         remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
         emulate_tty=True,
     )
-    
+
+    realsense_aruco_node = Node(
+        package="realsense_aruco",
+        executable="realsense_aruco",
+        namespace="",
+        output="screen",
+        parameters=[],
+        remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
+        emulate_tty=True,
+    )
+
 
     if simple:
         nodes_to_start = [
@@ -530,7 +540,8 @@ def generate_launch_description():
             robotiq_simple_robot_simulator_node,
             robotiq_ghost_robot_state_publisher_node,
             robotiq_teaching_ghost_node,
-            ur_controller_node
+            ur_controller_node,
+            realsense_aruco_node
         ]
 
     return LaunchDescription(declared_arguments + nodes_to_start)
