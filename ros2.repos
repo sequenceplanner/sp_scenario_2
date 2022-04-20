@@ -46,4 +46,4 @@ repositories:
   sp_scenario_2:
     type: git
     url: https://github.com/sequenceplanner/sp_scenario_2.git
-    version: v.0.0.1
+    version: v.0.0.2
