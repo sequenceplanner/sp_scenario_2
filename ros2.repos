@@ -23,6 +23,14 @@ repositories:
     type: git
     url: https://github.com/sequenceplanner/teaching_tools_ui.git
     version: v.0.0.2
+  ur_script_driver:
+    type: git
+    url: https://github.com/sequenceplanner/ur_script_driver.git
+    version: v.0.0.1
+  ur_script_msgs:
+    type: git
+    url: https://github.com/sequenceplanner/ur_script_msgs.git
+    version: v.0.0.1
   ur_description:
     type: git
     url: https://github.com/sequenceplanner/ur_description.git
