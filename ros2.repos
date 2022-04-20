@@ -2,7 +2,7 @@ repositories:
   ur_controller:
     type: git
     url: https://github.com/sequenceplanner/ur_controller.git
-    version: v.0.0.2
+    version: v.0.0.3
   gui_tools:
     type: git
     url: https://github.com/sequenceplanner/gui_tools.git
@@ -22,7 +22,7 @@ repositories:
   teaching_tools_ui:
     type: git
     url: https://github.com/sequenceplanner/teaching_tools_ui.git
-    version: v.0.0.2
+    version: v.0.0.3
   ur_script_driver:
     type: git
     url: https://github.com/sequenceplanner/ur_script_driver.git
@@ -46,4 +46,4 @@ repositories:
   sp_scenario_2:
     type: git
     url: https://github.com/sequenceplanner/sp_scenario_2.git
-    version: v.0.0.2
+    version: v.0.0.1
