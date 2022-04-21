@@ -53,4 +53,4 @@ ros2 launch sp_scenario_2 bringup_simple.launch.py
    ```
 
 ## Todo describe scenario in detail...
-sp_scenario_2
+sp_scenario_2 is a nice scenario
