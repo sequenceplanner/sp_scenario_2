@@ -534,6 +534,7 @@ def generate_launch_description():
             rviz_node,
             sms_node,
             query_gui_node,
+            teaching_ui_node,
             control_gui_node,
             viz_static_node,
             robotiq_robot_state_publisher_node,
