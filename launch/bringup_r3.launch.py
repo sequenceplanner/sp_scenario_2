@@ -16,16 +16,15 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # dir = FindPackageShare("sp_scenario_2").find("sp_scenario_2")
-    dir = "/home/student/sp_scenario_2_ws/src/sp_scenario_2"
-    robotiq_description_dir = FindPackageShare("robotiq_2f_description").find("robotiq_2f_description")
+    dir = "/home/ros/sp_scenario_2_ws/src/sp_scenario_2"
     urc_setup_dir = FindPackageShare("ur_controller").find("ur_controller")
 
     robot_parameters_path = os.path.join(
-        dir, "robots", "case_r2", "general.json"
+        dir, "robots", "case_r3", "general.json"
     )
 
     parameters = {
-        "scenario_path": os.path.join(dir, "scenario"),
+        "scenario_path": os.path.join(dir, "scenario_r3"),
         "meshes_path": os.path.join(dir, "meshes"),
     }
 
@@ -40,46 +39,6 @@ def generate_launch_description():
         robot_parameters = json.load(jsonfile)
 
     declared_arguments = []
-
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "robotiq_description_package",
-            default_value="robotiq_2f_description",
-            description="Description package with robot URDF/XACRO files. Usually the argument \
-        is not set, it enables use of a custom description.",
-        )
-    )
-
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "robotiq_description_file",
-            default_value="robotiq_2f_85_model.xacro",
-            description="URDF/XACRO description file with the robot.",
-        )
-    )
-
-    robotiq_robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            os.path.join(robotiq_description_dir, "urdf", "robotiq_2f_85_model.xacro"),
-            " ",
-            "prefix:=robotiq/"
-        ]
-    )
-
-    robotiq_ghost_robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            os.path.join(robotiq_description_dir, "urdf", "ghost_robotiq_2f_85_model.xacro"),
-            " ",
-            "prefix:=ghost_"
-        ]
-    )
-
-    robotiq_robot_description = {"robot_description": robotiq_robot_description_content}
-    robotiq_ghost_robot_description = {"robot_description": robotiq_ghost_robot_description_content}
 
     declared_arguments.append(
         DeclareLaunchArgument(
@@ -286,11 +245,11 @@ def generate_launch_description():
     ghost_robot_description = {"robot_description": ghost_robot_description_content}
     robot_description = {"robot_description": robot_description_content}
 
-    rviz_config_file = os.path.join(dir, "config", "bringup.rviz")
+    rviz_config_file = os.path.join(dir, "config", "bringup_r3.rviz")
 
     teaching_marker_node_parameters = {
         "initial_base_link_id": "ghost_" + "base_link",
-        "initial_tcp_id": "ghost_" + "robotiq_2f_tcp",
+        "initial_tcp_id": "ghost_" + "suction_cup_1",
         "marker_scale": "0.05"
     }
 
@@ -299,7 +258,7 @@ def generate_launch_description():
         "initial_joint_state": ["-1.5707", "-1.5707", "1.5707", "-1.5707", "-1.5707", "0.0"],
         "initial_base_link_id": "ghost_" + "base_link",
         "initial_face_plate_id": "ghost_" + "tool0",
-        "initial_tcp_id": "ghost_" + "robotiq_2f_tcp"
+        "initial_tcp_id": "ghost_" + "suction_cup_1"
     }
 
     robot_parameters = {
@@ -307,57 +266,13 @@ def generate_launch_description():
         "initial_joint_state": ["0.0", "-1.5707", "1.5707", "-1.5707", "-1.5707", "0.0"],
         "initial_base_link_id": "base",
         "initial_face_plate_id":"tool0",
-        "initial_tcp_id": "robotiq_2f_tcp"
-    }
-
-    robotiq_robot_parameters = {
-        "urdf_raw": robotiq_robot_description_content,
-        "initial_joint_state": ["0.0", "0.0", "0.0", "0.0", "0.0", "0.0"], # fully open
-        "initial_base_link_id": "robotiq_2f_base_link",
-        "initial_face_plate_id": "left_inner_finger_pad",
-        "initial_tcp_id": "left_inner_finger_pad"
-    }
-
-    robotiq_ghost_robot_parameters = {
-        "urdf_raw": robotiq_ghost_robot_description_content,
-        "initial_joint_state": ["0.0", "0.0", "0.0", "0.0", "0.0", "0.0"], # fully open
-        "initial_base_link_id": "ghost_" + "robotiq_2f_base_link",
-        "initial_face_plate_id": "ghost_" + "left_inner_finger_pad",
-        "initial_tcp_id": "ghost_" + "left_inner_finger_pad"
+        "initial_tcp_id": "suction_cup_1"
     }
 
     driver_parameters = {
-        "ur_address": "192.168.100.22", #robot_parameters["ip_address"],
+        "ur_address": "192.168.100.32", #robot_parameters["ip_address"],
         "tf_prefix": "", #robot_parameters["prefix"],
     }
-
-    robotiq_robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        namespace="robotiq",
-        output="screen",
-        parameters=[robotiq_robot_description],
-        # remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
-        emulate_tty=True,
-    )
-
-    robotiq_ghost_robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        namespace="robotiq/ghost",
-        output="screen",
-        parameters=[robotiq_ghost_robot_description],
-        emulate_tty=True,
-    )
-
-    robotiq_teaching_ghost_node = Node(
-        package="teaching_ghost",
-        executable="teaching_ghost",
-        namespace="robotiq",
-        output="screen",
-        parameters=[robotiq_ghost_robot_parameters],
-        emulate_tty=True,
-    )
 
     ur_controller_node = Node(
         package="ur_controller",
@@ -365,16 +280,6 @@ def generate_launch_description():
         namespace="",
         output="screen",
         parameters=[ur_controller_params],
-        emulate_tty=True,
-    )
-
-    robotiq_simple_robot_simulator_node = Node(
-        package="simple_robot_simulator",
-        executable="simple_robot_simulator",
-        namespace="robotiq",
-        output="screen",
-        parameters=[robotiq_robot_parameters],
-        # remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
         emulate_tty=True,
     )
 
@@ -505,16 +410,6 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
-    robotiq_driver_node = Node(
-        package="robotiq_2f_driver",
-        executable="robotiq_2f_driver",
-        namespace="",
-        output="screen",
-        parameters=[],
-        remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
-        emulate_tty=True,
-    )
-
     if simple:
         nodes_to_start = [
             ghost_robot_state_publisher_node,
@@ -528,10 +423,6 @@ def generate_launch_description():
             query_gui_node,
             # control_gui_node,
             viz_static_node,
-            robotiq_robot_state_publisher_node,
-            robotiq_simple_robot_simulator_node,
-            robotiq_ghost_robot_state_publisher_node,
-            robotiq_teaching_ghost_node,
             ur_controller_node
         ]
     else:
@@ -547,13 +438,8 @@ def generate_launch_description():
             teaching_ui_node,
             control_gui_node,
             viz_static_node,
-            robotiq_robot_state_publisher_node,
-            robotiq_simple_robot_simulator_node,
-            robotiq_ghost_robot_state_publisher_node,
-            robotiq_teaching_ghost_node,
             ur_controller_node,
             realsense_aruco_node,
-            robotiq_driver_node
         ]
 
     return LaunchDescription(declared_arguments + nodes_to_start)

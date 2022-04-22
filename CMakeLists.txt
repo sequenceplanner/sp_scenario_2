@@ -4,7 +4,7 @@ project(sp_scenario_2)
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch config meshes robots scenario
+install(DIRECTORY launch config meshes robots scenario_r2 scenario_r3
  DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
