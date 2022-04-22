@@ -15,12 +15,13 @@ from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    dir = FindPackageShare("sp_scenario_2").find("sp_scenario_2")
+    # dir = FindPackageShare("sp_scenario_2").find("sp_scenario_2")
+    dir = "/home/endre/Desktop/sp_scenario_2"
     robotiq_description_dir = FindPackageShare("robotiq_2f_description").find("robotiq_2f_description")
     urc_setup_dir = FindPackageShare("ur_controller").find("ur_controller")
 
     robot_parameters_path = os.path.join(
-        dir, "robots", "ursim3e", "general.json"
+        dir, "robots", "case_r2", "general.json"
     )
 
     parameters = {
@@ -326,7 +327,7 @@ def generate_launch_description():
     }
 
     driver_parameters = {
-        "ur_address": "0.0.0.0", #robot_parameters["ip_address"],
+        "ur_address": "192.168.100.22", #robot_parameters["ip_address"],
         "tf_prefix": "", #robot_parameters["prefix"],
     }
 
@@ -504,6 +505,15 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
+    robotiq_driver_node = Node(
+        package="robotiq_2f_driver",
+        executable="robotiq_2f_driver",
+        namespace="",
+        output="screen",
+        parameters=[],
+        remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
+        emulate_tty=True,
+    )
 
     if simple:
         nodes_to_start = [
@@ -542,7 +552,8 @@ def generate_launch_description():
             robotiq_ghost_robot_state_publisher_node,
             robotiq_teaching_ghost_node,
             ur_controller_node,
-            realsense_aruco_node
+            realsense_aruco_node,
+            robotiq_driver_node
         ]
 
     return LaunchDescription(declared_arguments + nodes_to_start)

@@ -51,3 +51,24 @@ repositories:
     type: git
     url: https://github.com/sequenceplanner/sp_scenario_2.git
     version: v.0.0.5
+  sp_msgs:
+    type: git
+    url: https://github.com/sequenceplanner/sp_msgs.git
+    version: v.0.0.1
+  sp_model:
+    type: git
+    url: https://github.com/sequenceplanner/sp-model_lab_demo.git
+    version: v.0.0.1
+  opcua_ros2_bridge:
+    type: git
+    url: https://github.com/sequenceplanner/opcua_ros2_bridge.git
+    version: v.0.0.1
+  sp_operation_ui:
+    type: git
+    url: https://github.com/sequenceplanner/sp_operation_ui.git
+    version: v.0.0.1
+  sp-ros:
+    type: git
+    url: https://github.com/sequenceplanner/sp-ros.git
+    version: v.0.0.1
+  
