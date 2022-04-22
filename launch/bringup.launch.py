@@ -16,7 +16,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # dir = FindPackageShare("sp_scenario_2").find("sp_scenario_2")
-    dir = "/home/endre/Desktop/sp_scenario_2"
+    dir = "/home/student/sp_scenario_2_ws/src/sp_scenario_2"
     robotiq_description_dir = FindPackageShare("robotiq_2f_description").find("robotiq_2f_description")
     urc_setup_dir = FindPackageShare("ur_controller").find("ur_controller")
 
