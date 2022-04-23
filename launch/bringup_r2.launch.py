@@ -16,7 +16,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # dir = FindPackageShare("sp_scenario_2").find("sp_scenario_2")
-    dir = "/home/student/sp_scenario_2_ws/src/sp_scenario_2"
+    dir = "/home/ros/sp_scenario_2_ws/src/sp_scenario_2"
     robotiq_description_dir = FindPackageShare("robotiq_2f_description").find("robotiq_2f_description")
     urc_setup_dir = FindPackageShare("ur_controller").find("ur_controller")
 
@@ -515,6 +515,16 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
+    frame_locker_node = Node(
+        package="frame_locker",
+        executable="frame_locker",
+        namespace="",
+        output="screen",
+        parameters=[],
+        remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
+        emulate_tty=True,
+    )
+
     if simple:
         nodes_to_start = [
             ghost_robot_state_publisher_node,
@@ -553,7 +563,8 @@ def generate_launch_description():
             robotiq_teaching_ghost_node,
             ur_controller_node,
             realsense_aruco_node,
-            robotiq_driver_node
+            robotiq_driver_node,
+            frame_locker_node
         ]
 
     return LaunchDescription(declared_arguments + nodes_to_start)

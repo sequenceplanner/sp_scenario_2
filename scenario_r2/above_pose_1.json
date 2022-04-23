@@ -1,13 +1,13 @@
 {
     "show": true,
     "active": true,
-    "child_frame_id": "pose_1",
+    "child_frame_id": "above_pose_1",
     "parent_frame_id": "floor",
     "transform": {
         "translation": {
             "x": -0.1805777588017492,
             "y": -0.42118486892581053,
-            "z": 0.7276494070667974
+            "z": 0.8276494070667974
         },
         "rotation": {
             "x": 0.0028677178772184555,
